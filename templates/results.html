@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+    <h1>Crop Recommendation Results</h1>
+    <p id="error-message" class="error"></p>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% else %}
+        <!-- Hidden field to pass the max acres -->
+        <div id="max-acres" data-max-acres="{{ farmer_input['Acres'] | int }}"></div>
+        <form action="/accept" method="POST">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Crop</th>
+                        <th>Acres Allocated</th>
+                        <th>Profit (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>
+                            <input
+                                type="checkbox"
+                                name="results"
+                                value="{{ result.crop }}:{{ result.acres }}"
+                                data-acres="{{ result.acres }}"
+                                class="crop-checkbox"
+                            >
+                        </td>
+                        <td>{{ result.crop }}</td>
+                        <td>{{ result.acres }}</td>
+                        <td>₹{{ result.profit }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- Hidden field for farmer input -->
+            <input type="hidden" name="farmer_input" value='{{ farmer_input | tojson }}'>
+            <button type="submit" id="submit-button">Submit Selection</button>
+        </form>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Crop Recommendation System</h1>
+    <form action="/predict" method="POST">
+        <!-- Soil Type -->
+        <label for="soil_type">Soil Type:</label>
+        <select name="soil_type" id="soil_type" required>
+            <option value="Black">Black</option>
+            <option value="Alluvial">Alluvial</option>
+            <option value="Red">Red</option>
+        </select>
+        <br><br>
+
+        <!-- Nutrient Levels -->
+        <label for="nitrogen">Nitrogen (N):</label>
+        <input type="number" id="nitrogen" name="nitrogen" placeholder="Enter nitrogen content" required>
+        <br><br>
+
+        <label for="phosphorous">Phosphorous (P):</label>
+        <input type="number" id="phosphorous" name="phosphorous" placeholder="Enter phosphorous content" required>
+        <br><br>
+
+        <label for="sulfur">Potassium (K):</label>
+        <input type="number" id="sulfur" name="sulfur" placeholder="Enter Potassium content" required>
+        <br><br>
+
+        <!-- District Dropdown -->
+        <label for="district">District:</label>
+        <select name="district" id="district" required>
+            {% for district in districts %}
+            <option value="{{ district }}">{{ district }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <!-- Cultivation Info -->
+        <label for="acres">Number of Acres to Cultivate:</label>
+        <input type="number" id="acres" name="acres" placeholder="Enter acres to cultivate" required>
+        <br><br>
+
+        <label for="budget">Budget (₹):</label>
+        <input type="number" id="budget" name="budget" placeholder="Enter budget in ₹" required>
+        <br><br>
+
+        <!-- Submit Button -->
+        <button type="submit">Get Recommendations</button>
+    </form>
+</body>
+</html>
